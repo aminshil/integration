@@ -1,0 +1,73 @@
+<section class="section  ">
+    <div class="row">
+        <div class=" col-sm-6 ">
+
+            <div class="card ">
+                <div class="card-body  ">
+                    <h5 class="card-title">Ajouter Formation</h5>
+
+                    <!-- General Form Elements -->
+                    {{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+
+                        <div class="row mb-4 ">
+                            <label for="inputText" class="col-sm-5 col-form-label">Nom de formation</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.nom_formation,{'attr':{'class':'form-control'}}) }}
+                                {{ form_errors(form.nom_formation,{'attr':{'class':'text-danger'}}) }}
+                            </div>
+                        </div>
+                    <div class="row mb-4">
+                        <label for="inputText" class="col-sm-5 col-form-label ">Description</label>
+                        <div class="col-sm-10">
+                            {{ form_widget(form.description_formation,{'attr':{'class':'form-control'}}) }}
+                            {{ form_errors(form.description_formation,{'attr':{'class':'text-danger'}}) }}
+                        </div>
+                    </div>
+                        <div class="row mb-4">
+                            <label for="inputDate" class="col-sm-5 col-form-label ">Date de formation</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.date_formation, {'attr': {'type':'date','class': 'form-control'}}) }}
+                                {{ form_errors(form.date_formation,{'attr':{'class':'text-danger'}}) }}
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="inputText" class="col-sm-5 col-form-label ">Formateur</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.formateur,{'attr':{'class':'form-control'}}) }}
+                                {{ form_errors(form.formateur,{'attr':{'class':'text-danger'}}) }}
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="inputText" class="col-sm-5 col-form-label ">Lieu de formation</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.lieu_formation,{'attr':{'class':'form-control'}}) }}
+                                {{ form_errors(form.lieu_formation,{'attr':{'class':'text-danger'}}) }}
+                            </div>
+                        </div>
+
+
+                        <div class="row mb-4">
+                            <label for="inputText" class="col-sm-5 col-form-label ">Image</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.image_formation,{'attr':{'class':'form-control text-center',}}) }}
+                                {{ form_errors(form.image_formation,{'attr':{'class':'text-danger'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-sm-5">
+                         <button type="submit" class="btn btn-primary">{{ button_label|default('ajouter') }}</button>
+                        </div>
+                    {{ form_end(form) }}<!-- End General Form Elements -->
+
+                </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+</section>

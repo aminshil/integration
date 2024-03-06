@@ -1,0 +1,157 @@
+{% extends 'evenement/listevenements.html.twig' %}
+{% block title %}Évènement{% endblock %}
+
+{%  block body %}
+{% block header %}
+{{ parent() }}
+{% endblock %}
+{% block sidebar %}
+{{ parent() }}
+{% endblock %}
+<h1></h1>
+<h1>Évènement</h1>
+{% block content %}
+<div class="container">
+    <h1>Évènement</h1>
+<div>
+        <img src={{asset('uploads/' ~ evenement.image)}} class="img-fluid">
+</div>
+
+<a href="{{ path('app_list_evenements') }}" class="btn btn-primary">List évènements</a>
+<h4></h4>
+<a href="{{ path('app_modifier_evenement', {'id': evenement.id}) }}" class="btn btn-primary">Modifier</a>
+<h4></h4>
+<a href="{{ path('app_supprimer_evenement', {'id': evenement.id}) }}" class="btn btn-primary">Supprimer</a>
+
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ evenement.id }}</td>
+            </tr>
+            <tr>
+                        <tr>
+                <th>Createur</th>
+                <td>{{ evenement.getUserEvenement().email }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ evenement.nom }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ evenement.description }}</td>
+            </tr>
+            <tr>
+                <th>Date_debut</th>
+                <td>{{ evenement.dateDebut ? evenement.dateDebut|date('Y-m-d H:i') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date_fin</th>
+                <td>{{ evenement.dateFin ? evenement.dateFin|date('Y-m-d H:i') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Periode évènement</th>
+                <td>{{ evenement.calculatePeriod() }}</td>
+            </tr>
+
+            <tr>
+                <th>Objectif</th>
+                <td>{{ evenement.objectif }}</td>
+            </tr>
+            <tr>
+                <th>Formation</th>
+                <td>{{ evenement.formation ? 'Oui' : 'Non' }}</td>
+            </tr>
+            <tr>
+                <th>Nbrparticipants</th>
+                <td>{{ evenement.participationevenement|length }}</td>
+            </tr>
+                        <tr>
+                <th>Commentaires</th>
+                <td>{{ evenement.getNumberOfComments }}</td>
+            </tr>
+                                    <tr>
+                <th>Etat de l'évènement</th>
+                <td>{{ evenement.etat }}</td>
+            </tr>
+
+
+
+            <tr>
+                <th>Location</th>
+                <td>
+                    <!-- Map container -->
+                    <div id="map" style="width: 100%; height: 400px;"></div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+    <h1>Les commentaires d'évènement</h1>
+<div class="card">
+    <div class="card-body">
+<table class="table table-hover">
+        <thead>
+            <tr>
+            <th scope="col"></th>
+            <th scope="col">Action</th>
+                <th scope="col">Image</th>
+                <th scope="col">Nom Utilisateur</th>
+                <th scope="col">Date de creation</th>
+                <th scope="col">Commentaire</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for evenementcomment in evenement.commentaires %}
+            <tr>
+             <th scope="row"></th>
+                             <td>
+                    <a href="{{ path('app_supprimer_commentaire', {'id': evenementcomment.id} ) }}" onclick="return confirm('Voulez-vous vraiment supprimer cette commentaire ?')" class="trash-button">
+   Supprimer <i class="fal fa-trash"></i>
+</a>
+            </td>
+             <td><img src="{{asset('assets/img/blog/comments-1.jpg')}}" alt=""></td>
+                <td>{{evenementcomment.getCommentaireuser.nom}} {{evenementcomment.getCommentaireuser.prenom}}</td>
+                <td><time datetime="{{ evenementcomment.datecreation|date('Y-m-d H:i') }}">{{ evenementcomment.datecreation|date('Y-m-d H:i') }}</time></td>
+                <td>{{evenementcomment.contenu}}</td>
+
+            </tr>
+              {% else %}
+
+                    <p>
+              il n'ya pas des commentaires
+                    </p>
+                    {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+    {% endblock %}
+    <!-- Include Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<!-- Map script -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+    // Initialize the map with the event's coordinates
+    var eventLocation = [{{ evenement.latitude }}, {{ evenement.longitude }}];
+    var map = L.map('map').setView(eventLocation, 14); // Adjust zoom level as needed
+
+    // Add the base map layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add marker for the event location
+    L.marker(eventLocation).addTo(map)
+        .bindPopup('{{ evenement.nom }}'); // Optional popup for the marker
+</script>
+    {% endblock %}
+    

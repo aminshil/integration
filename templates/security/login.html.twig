@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {# Add the necessary stylesheet links for your styles #}
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/animate/animate.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/css-hamburgers/hamburgers.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/animsition/css/animsition.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/select2/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/daterangepicker/daterangepicker.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/css/util.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/css/main.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <form method="post" action="{{ path('app_login') }}" class="login100-form validate-form p-l-55 p-r-55 p-t-178">
+                 {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    {% if app.user %}
+                        <div class="alert alert-info">
+                            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                        </div>
+                    {% endif %}
+
+                    <span class="login100-form-title">
+                    Connexion
+                    </span>
+
+                    <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
+                        <input class="input100" type="email" name="email" id="inputEmail" class="form-control" autocomplete="email" placeholder="Email">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Please enter password">
+                        <input class="input100" type="password" name="password" placeholder="Mot de passe ">
+                        <span class="focus-input100"></span>
+                    </div>
+                     <div>
+                     <a href="{{ path('app_forgot_password_request') }}" class="txt3">
+                            Mot de passe Oublié
+                        </a>
+                         </div>
+<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <div class="container-login100-form-btn" style="margin-top: 40px;">
+                        <button  type="submit"   class="login100-form-btn">
+                           Connexion
+                        </button>
+                    </div>
+
+                    <div class="flex-col-c p-t-170 p-b-40">
+                        <span class="txt1 p-b-9">
+                            Vous n'avez pas de compte ?
+                        </span>
+
+                        <a href="{{ path('app_register') }}" class="txt3">
+                            Creér un compte
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {# Add the necessary JavaScript files #}
+    <script src="{{ asset('Login/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('Login/vendor/animsition/js/animsition.min.js') }}"></script>
+    <script src="{{ asset('Login/vendor/bootstrap/js/popper.js') }}"></script>
+    <script src="{{ asset('Login/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('Login/vendor/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('Login/vendor/daterangepicker/moment.min.js') }}"></script>
+    <script src="{{ asset('Login/vendor/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('Login/vendor/countdowntime/countdowntime.js') }}"></script>
+    <script src="{{ asset('Login/js/main.js') }}"></script>
+{% endblock %}

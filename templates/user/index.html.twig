@@ -1,0 +1,50 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}User index{% endblock %}
+      {% block content %}
+
+{% block body %}
+    <h1>list of users</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Role</th> {# Change from 'Roles' to 'Role' #}
+            <th>Password</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Image</th>
+            <th>DateDeNaissance</th>
+            <th>IsVerified</th>
+            <th>Actions</th> {# Change from 'actions' to 'Actions' #}
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+            
+               
+                <td>{{ user.nom }}</td>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.image }}</td>
+                <td>{{ user.dateDeNaissance ? user.dateDeNaissance|date('Y-m-d') : '' }}</td>
+                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}">Show</a> {# Change 'show' to 'Show' #}
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">Edit</a> {# Change 'edit' to 'Edit' #}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">No records found</td> {# Change 'no records found' to 'No records found' #}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}{% endblock %}
+

@@ -1,0 +1,217 @@
+{% extends 'publication/publication/liste.html.twig' %}
+{% block body %}
+{% block header %}
+ {{ parent() }}
+    {% endblock %}
+
+
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Demandes</h2>
+          {#<ol>
+            <li><a href="index.html">Home</a></li>
+            <li>Blog</li>
+          </ol>#}
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Blog Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <div class="col-lg-8 entries">
+          <div class="read-more">
+                
+                  <a href="{{ path('app_adddemande') }}" class="btn btn-success">Ajouter une demande</a>
+                                                <p></p>     
+                               
+                   </div>
+{% for i  in pagination %}
+
+            <article class="entry">
+               <div class="entry-img">
+            {% set categoryImage = '' %}
+            {% if i.Category.typeofcat == 'nourriture' %}
+                {% set categoryImage = 'assets/img/slide/slide-3.jpg' %}
+            {% elseif i.Category.typeofcat == 'Vêtement' %}
+                {% set categoryImage = 'assets/img/slide/slide-2.jpg' %}
+            {% elseif i.Category.typeofcat == 'object' %}
+                {% set categoryImage = 'assets/img/slide/slide1.png' %}
+            {% endif %}
+            
+            <img src="{{ asset(categoryImage) }}" alt="" class="img-fluid">
+        </div>
+
+              
+              <h2 class="entry-title">
+                <a href="{{ path('demande_show', {'id': i.id}) }}">{{ i.nameofobj}}</a>
+              </h2>
+              <h2 class="entry-title">
+                <a href="{{ path('demande_show', {'id': i.id}) }}"> <span style="font-size: smaller; font-weight: normal;">Urgence:</span>{{ i.stateofdem }}</a>
+              </h2>
+
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">{{ i.demandeuser.prenom}}  {{ i.demandeuser.nom}}               {{ i.Category.typeofcat}}      </a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime=i.dateofdem>{{ i.dateofdem ? i.dateofdem|date('Y-m-d') : '' }}</time></a></li>
+                 
+                </ul>
+              </div>
+
+              <div class="entry-content">
+                <p>
+{{ badWordFilter.filterBadWords(i.demande|raw) }}                </p>
+                <div class="read-more">
+    <a href="{{ path('demande_show', {'id': i.id}) }}">Contacter</a>
+    {% if app.user == i.demandeuser %}
+    <a href="{{ path('demande_edit', {'id': i.id}) }}">Editer</a>
+    <a href="{{ path('demande_delete', {'id': i.id}) }}" onclick="return confirm('Voulez-vous vraiment supprimer cet demande ?')">Supprimer</a>
+    {% endif %}
+  </div>
+                   
+                   
+                                   
+
+              </div>
+
+            </article><!-- End blog entry -->
+
+{% else %}
+                    <tr>
+                <td colspan="9">il n'ya pas de demande</td>
+            </tr>
+        {% endfor %}
+
+
+<div style="text-align: center;">
+                        <style>
+                            /* Styles pour la pagination */
+                            .custom-pagination {
+                                list-style: none;
+                                display: flex;
+                                justify-content: center;
+                                padding: 0;
+                            }
+
+                            .custom-pagination li {
+                                margin: 0 5px;
+                                display: inline-block;
+                            }
+
+                            .custom-pagination a {
+                                text-decoration: none;
+                                color: #4CAF50; /* Vert */
+                                padding: 10px 15px;
+                                border: 2px solid #4CAF50;
+                                border-radius: 5px;
+                                background-color: transparent;
+                                transition: background-color 0.3s, color 0.3s;
+                            }
+
+                            .custom-pagination a:hover {
+                                background-color: #4CAF50;
+                                color: #fff;
+                            }
+
+                            .custom-pagination .active a {
+                                background-color: #4CAF50;
+                                color: #fff;
+                                border: 2px solid #4CAF50;
+                            }
+                        </style>
+
+                        <div class="custom-pagination">
+                            <ul>
+                                {{ knp_pagination_render(pagination) }}
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+
+</main>
+
+
+{% block footer %}
+<!-- ======= Footer ======= -->
+    <footer id="footer">
+
+        <div class="footer-top  ">
+            <div class="container ">
+                <div class="footer-contact text-center  ">
+
+                 <a href="index.html" class="logo"><img src="{{asset('assets/img/logo1.png')}}"  alt="texte alternatif" width=5% height=5% class="img-fluid"></a>
+                    <h3>ECOPARTAGE</h3>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">acceuil</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Publication</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">dépôts</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Produits</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Formations</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">événements</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div class="text-center footer-newsletter">
+
+                        <div class="social-links text-center text-md-right pt-3 pt-md-0">
+                            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </footer><!-- End Footer -->
+{% endblock %}
+{% endblock %}

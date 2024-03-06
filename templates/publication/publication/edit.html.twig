@@ -1,0 +1,156 @@
+{% extends 'publication/publication/add.html.twig' %}
+{% block body %}
+{% block Header %}
+{{ parent() }}
+{% endblock %}
+  <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Editer votre demande</h2>
+          
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+<div class="row mt-5 justify-content-center" data-aos="fade-up">
+          <div class="col-lg-10">
+<a href="javascript:history.go(-1)" class="btn btn-secondary">Annuler</a>
+        
+            {{ form_start(formeditpub,{attr:{novalidate:'novalidate'}}) }}
+              <div class="row">
+                <div class="form-group mt-3">
+                  
+<div class="comment-img" style="display: flex; align-items: center;"> 
+    <img src="{{ asset('uploads/images/' ~ user.image) }}" class="img-fluid rounded-circle" style="width: 50px; height: 50px;"> 
+    <h2 style="margin-left: 10px;">{{ user.nom }} {{ user.prenom }}</h2> 
+</div>
+               
+              </div>
+               
+              <div class="form-group mt-3">
+              <h1 label for="inputText" class="col-sm-5 col-form-label">Votre sujet de la publication</h1></label>
+                
+                <div class="col-sm-10">
+                                {{ form_widget(formeditpub.topicofpub,{'attr':{'class':'form-control'}}) }}
+                                {{ form_errors(formeditpub.topicofpub,{'attr':{'class':'text-danger'}}) }}
+                            </div>
+              </div>
+              
+              <div class="form-group mt-3">
+              <h1 label for="inputText" class="col-sm-5 col-form-label">Votre publicaion</h1></label>
+                
+                <div class="col-sm-10">
+                                {{ form_widget(formeditpub.publication,{'attr':{'class':'form-control'},'id':'publicationText'}) }}
+                                {{ form_errors(formeditpub.publication,{'attr':{'class':'text-danger'}}) }}
+                                <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@3.0.3/dist/index.min.js"></script>
+
+<button id="emoji-button" type="button">Emojis</button>
+{{ form_row(formeditpub._token) }}
+
+<script>
+const button = document.querySelector('#emoji-button');
+
+const picker = new EmojiButton();
+
+button.addEventListener('click', () => {
+  picker.togglePicker(button);
+  
+});
+
+  picker.on('emoji', emoji => {
+    document.getElementById('publicationText').value += emoji;
+  });
+  </script>
+                            </div>
+                        
+
+              </div>
+               <div class="form-group mt-3">
+                            <h1 label for="inputText" class="col-sm-5 col-form-label ">Image</h1></label>
+                        <div class="col-sm-10">
+                                {{ form_widget(formeditpub.imagepub,{'attr':{'class':'form-control text-center',}}) }}
+                                {{ form_errors(formeditpub.imagepub,{'attr':{'class':'text-danger'}}) }}
+                            </div>
+                        </div>
+            
+             
+               
+              
+              <div class="text-center"><button type="submit">Sauvgarder</button></div>
+            </form>
+          </div>
+          
+          {% block footer %}
+<!-- ======= Footer ======= -->
+    <footer id="footer">
+
+        <div class="footer-top  ">
+            <div class="container ">
+                <div class="footer-contact text-center  ">
+
+                 <a href="index.html" class="logo"><img src="{{asset('assets/img/logo1.png')}}"  alt="texte alternatif" width=5% height=5% class="img-fluid"></a>
+                    <h3>ECOPARTAGE</h3>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">acceuil</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Publication</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">dépôts</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Produits</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Formations</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">événements</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div class="text-center footer-newsletter">
+
+                        <div class="social-links text-center text-md-right pt-3 pt-md-0">
+                            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </footer><!-- End Footer -->
+{% endblock %}
+{% endblock %}

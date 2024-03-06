@@ -1,0 +1,10 @@
+# config/packages/knpu_oauth2_client.yaml
+
+knpu_oauth2_client:
+    clients:
+        google:
+            type: google
+            client_id: '667495351765-l41s3hevokkbuhe098o37or6551clnhp.apps.googleusercontent.com'
+            client_secret: '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'
+            redirect_route: 'connect_google_check'
+            redirect_params: {}

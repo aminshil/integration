@@ -1,0 +1,143 @@
+{% extends 'publication/demande/add.html.twig' %}
+{% block body %}
+{% block Header %}
+{{ parent() }}
+{% endblock %}
+  <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Editer votre demande</h2>
+          
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+<div class="row mt-5 justify-content-center" data-aos="fade-up">
+          <div class="col-lg-10">
+
+        <a href="javascript:history.go(-1)" class="btn btn-secondary">Annuler</a>
+        
+            {{ form_start(formedit,{attr:{novalidate:'novalidate'}}) }}
+              <div class="row">
+                <div class="form-group mt-3">
+
+                  <div class="comment-img" style="display: flex; align-items: center;"> 
+    <img src="{{ asset('uploads/images/' ~ user.image) }}" class="img-fluid rounded-circle" style="width: 50px; height: 50px;"> 
+    <h2 style="margin-left: 10px;">{{ user.nom }} {{ user.prenom }}</h2> 
+</div>
+               
+              </div>
+               <div class="form-group mt-3">
+               <h1 label for="inputText" class="col-sm-5 col-form-label">Urgence de la demande</h1></label>
+                 
+                  <div class="col-sm-10">
+                                {{ form_widget(formedit.stateofdem,{'attr':{'class':'form-control'}}) }}
+                                {{ form_errors(formedit.stateofdem,{'attr':{'class':'text-danger'}}) }}
+                            </div>
+                </div>
+               <div class="form-group mt-3">
+               <h1 label for="inputText" class="col-sm-5 col-form-label">type du demande</h1></label>
+                 
+                  <div class="col-sm-10">
+                             
+                                {{ form_widget(formedit.Category,{'attr':{'class':'form-control', 'placeholder': 'Entrer le type de la demande'}}) }}
+                                {{ form_errors(formedit.Category,{'attr':{'class':'text-danger'}}) }}
+                            </div>
+                </div>
+               <div class="form-group mt-3">
+               <h1 label for="inputText" class="col-sm-5 col-form-label">Nom de l'objet</h1></label>
+                 
+                  <div class="col-sm-10">
+                                {{ form_widget(formedit.nameofobj,{'attr':{'class':'form-control'}}) }}
+                                {{ form_errors(formedit.nameofobj,{'attr':{'class':'text-danger'}}) }}
+                            </div>
+                </div>
+              <div class="form-group mt-3">
+              <h1 label for="inputText" class="col-sm-5 col-form-label">Votre demande</h1></label>
+                
+                <div class="col-sm-10">
+                                {{ form_widget(formedit.demande,{'attr':{'class':'form-control'}}) }}
+                                {{ form_errors(formedit.demande,{'attr':{'class':'text-danger'}}) }}
+                            </div>
+              </div>
+             
+             {{ form_row(formedit._token) }}
+               {{ form_end(formedit) }}
+              
+              <div class="text-center"><button type="submit">Sauvgarder</button></div>
+            </form>
+          </div>
+          {% block footer %}
+<!-- ======= Footer ======= -->
+    <footer id="footer">
+
+        <div class="footer-top  ">
+            <div class="container ">
+                <div class="footer-contact text-center  ">
+
+                 <a href="index.html" class="logo"><img src="{{asset('assets/img/logo1.png')}}"  alt="texte alternatif" width=5% height=5% class="img-fluid"></a>
+                    <h3>ECOPARTAGE</h3>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">acceuil</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Publication</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">dépôts</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Produits</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Formations</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">événements</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div class="text-center footer-newsletter">
+
+                        <div class="social-links text-center text-md-right pt-3 pt-md-0">
+                            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </footer><!-- End Footer -->
+{% endblock %}
+{% endblock %}

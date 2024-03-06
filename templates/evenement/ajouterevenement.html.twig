@@ -1,0 +1,136 @@
+{% extends 'evenement/listevenements.html.twig' %}
+{%  block body %}
+{% block header %}
+{{ parent() }}
+{% endblock %}
+{% block sidebar %}
+{{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+
+
+<main id="main" class="main">
+    
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Évènement</h5>
+
+            <nav >
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/AfficheAdmin">Acceuil</a></li>
+                    <li class="breadcrumb-item active"><a href="/listevenements">Évènement</a></li>
+                                  <li class="breadcrumb-item active"><a href="/ajouterevenement">Ajouter</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class=" col-sm-6 ">
+
+            <div class="card ">
+                <div class="card-body  ">
+
+{{form_start(evenement_form,{'attr':{'novalidate':'novalidate'}})}}
+
+
+
+
+<table>
+
+<tr>
+    <td>{{ form_label(evenement_form.nom) }}</td>
+    <td>{{ form_widget(evenement_form.nom, {'attr': {'placeholder': 'Entrer le nom...' ,'class': 'form-control'}}) }}</td>
+    <td>{{ form_errors(evenement_form.nom) }}</td>
+</tr>
+
+<tr>
+    <td>{{ form_label(evenement_form.description) }}</td>
+    <td>{{ form_widget(evenement_form.description, {'attr': {'placeholder': 'Ajouter une description...','class': 'form-control'}}) }}</td>
+    <td>{{ form_errors(evenement_form.description) }}</td>
+</tr>
+
+
+<tr>
+
+    <td>{{ form_label(evenement_form.date_debut) }}</td>
+   <td> {{ form_widget(evenement_form.date_debut, {'attr': {'type':'date','class': 'form-control'}}) }}</td>
+    <td>{{ form_errors(evenement_form.date_debut) }}</td>
+</tr>
+
+
+<tr>
+
+    <td>{{ form_label(evenement_form.date_fin) }}</td>
+    <td>{{ form_widget(evenement_form.date_fin, {'attr': {'type':'date','class': 'form-control'}}) }}</td>
+    <td>{{ form_errors(evenement_form.date_fin) }}</td>
+</tr>
+
+
+<tr>
+
+   <td> {{ form_label(evenement_form.objectif) }}</td>
+   <td> {{ form_widget(evenement_form.objectif, {'attr': {'placeholder': 'Ajouter votre objectif...','class': 'form-control'}}) }}</td>
+   <td> {{ form_errors(evenement_form.objectif) }}</td>
+
+
+<tr>
+
+   <td> {{ form_label(evenement_form.formation) }}</td>
+   <td> {{ form_widget(evenement_form.formation, {'attr': {'class': 'form-control'}}) }}</td>
+   <td> {{ form_errors(evenement_form.formation) }}</td>
+</tr>
+
+<tr>
+    <td>{{ form_label(evenement_form.image) }}</td>
+    <td>{{ form_widget(evenement_form.image, {'attr': {'class': 'form-control'}}) }}</td>
+
+</tr>
+<tr><td><td>{{ form_errors(evenement_form.image) }}</td><tr>
+
+    <td>l'adresse en text</td>
+    <td>{{ form_widget(evenement_form.locationtext, {'attr': {'class': 'form-control'}}) }}</td>
+    <td>{{ form_errors(evenement_form.locationtext) }}</td>
+        <td>{{ form_errors(evenement_form.longitude) }}</td>
+
+
+
+
+ <tr>
+                    <td>adresse dans Map:</td>
+
+       <td> <input type="text" id="addressInput" placeholder="Chercher adresse map">  <button type="button" onclick="searchAddress()">Recherche</button></td>
+        
+     
+                        
+</tr>
+             <tr>  
+                   <td>
+              <td id="map" style="width: 600px; height: 400px;"></td>  
+              </td>
+              </tr>
+
+</table>
+
+{{ form_widget(evenement_form.Enregistrer, {'attr': {'class': 'form-control'}}) }}
+<button type="submit" formaction="{{ path('app_list_evenements') }}" class="form-control">Retour</button>
+
+{{form_end(evenement_form)}}
+</div>
+
+</div></div>
+
+</div>
+</div>
+</main>
+{% endblock %}
+
+
+
+
+
+
+   
+{% endblock %}

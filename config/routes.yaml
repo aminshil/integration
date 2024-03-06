@@ -1,0 +1,80 @@
+index:
+    path: /
+    controller: App\Controller\HomeController::index
+admin_dashboard:
+  path: /admin/dashboard
+  controller: App\Controller\AdminController::dashboard
+  methods: GET
+user:
+  resource: ../src/Controller/UserController.php
+  type: annotation
+  prefix: /userr
+
+  # config/routes.yaml
+2fa_login:
+    path: /2fa
+    defaults:
+        # "scheb_two_factor.form_controller" references the controller service provided by the bundle.
+        # You don't HAVE to use it, but - except you have very special requirements - it is recommended.
+        _controller: "scheb_two_factor.form_controller:form"
+
+2fa_login_check:
+    path: /2fa_check
+    # config/routes.yaml
+
+app_user_block:
+    path: '/user/block/{id}'
+    controller: 'App\Controller\UserController::blockUser'
+    methods: ['POST']
+
+    
+user_interface:
+    path: /Userr
+    controller: App\Controller\UserDashbordController::dashboard
+  
+search:
+    path: /search
+    controller: App\Controller\PublicationController::search
+# config/routes.yaml
+
+process_chat_message:
+    path: /process-chat-message
+    controller: 'App\Controller\ChatController::processChatMessage'
+    methods: ['POST']
+
+# config/routes.yaml
+
+# config/routes.yaml
+
+# Google authentication routes
+connect_google_check:
+    path: /connect/google/check
+
+connect_google:
+    path: /connect/google
+    controller: App\Controller\ConnectGoogleController::connect
+
+# config/routes.yaml
+user_stats:
+    path: /user/stats
+    controller: App\Controller\UserController::userStats
+
+update_evenement_rating:
+    path: /update_evenement_rating/{id}
+    controller: App\Controller\EvenementController::updateEvenementRating
+    methods: ['POST']
+
+app_participate:
+    path: '/event/{id}/participate'
+    controller: 'App\Controller\EventController@participate'
+    methods: ['POST']
+
+app_unparticipate:
+    path: '/event/{id}/unparticipate'
+    controller: 'App\Controller\EventController@unparticipate'
+    methods: ['POST']
+
+app_publication_list:
+    path: /publication
+    controller: App\Controller\PublicationController::pub
+    methods: GET

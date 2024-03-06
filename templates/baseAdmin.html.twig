@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}EcoPartage{% endblock %}</title>
+    <link rel="icon" href="{{asset('admin/img/ecopartagelogo.png')}}">
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+
+    <link href="{{asset('admin/img/ecopartagelogo.png')}}" rel="icon">
+    <link href="{{asset('admin/img/ecopartagelogo.png')}}" rel="apple-touch-icon">
+
+    {% block stylesheets %}
+        <!-- Google Fonts -->
+        <link href="https://fonts.gstatic.com" rel="preconnect">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+        <!-- Vendor CSS Files -->
+        <link href="{{asset('admin/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+        <link href="{{asset('admin/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+        <link href="{{asset('admin/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+        <link href="{{asset('admin/vendor/quill/quill.snow.css')}}" rel="stylesheet">
+        <link href="{{asset('admin/vendor/quill/quill.bubble.css')}}" rel="stylesheet">
+        <link href="{{asset('admin/vendor/remixicon/remixicon.css')}}" rel="stylesheet">
+        <link href="{{asset('admin/vendor/simple-datatables/style.css')}}" rel="stylesheet">
+
+        <!-- Template Main CSS File -->
+        <link href="{{asset('admin/css/style.css')}}" rel="stylesheet">
+
+        <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Ensures content is centered vertically */
+            flex-direction: column; /* Align content vertically */
+        }
+
+        .date-column {
+            width: auto; /* Adjust the width as needed */
+        }
+        
+        </style>
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+{% endblock %}
+
+
+
+
+{% block javascripts %}
+    <!-- Vendor JS Files -->
+    <script src="{{asset('admin/vendor/apexcharts/apexcharts.min.js')}}"></script>
+    <script src="{{asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('admin/vendor/chart.js/chart.umd.js')}}"></script>
+    <script src="{{asset('admin/vendor/echarts/echarts.min.js')}}"></script>
+    <script src="{{asset('admin/vendor/quill/quill.min.js')}}"></script>
+    <script src="{{asset('admin/vendor/simple-datatables/simple-datatables.js')}}"></script>
+    <script src="{{asset('admin/vendor/tinymce/tinymce.min.js')}}"></script>
+    <script src="{{asset('admin/vendor/php-email-form/validate.js')}}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{asset('admin/js/main.js')}}"></script>
+
+
+<script src="https://nominatim.openstreetmap.org/ui/search.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ol@latest/dist/ol.js"></script>
+<script>
+    // Check if latitude and longitude are null
+    var latitude = parseFloat(document.getElementById('evenement_latitude').value);
+    var longitude = parseFloat(document.getElementById('evenement_longitude').value);
+
+    if (isNaN(latitude) || isNaN(longitude)) {
+        // Adding a new map
+        var map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM({
+                        attributions: [] 
+                    })
+                })
+            ],
+            view: new ol.View({
+                center: [0, 0],
+                zoom: 2
+            })
+        });
+
+        var markerLayer = new ol.layer.Vector({
+            source: new ol.source.Vector(),
+            style: new ol.style.Style({
+                image: new ol.style.Icon({
+                    anchor: [0.5, 1],
+                    src: 'https://cdn.rawgit.com/openlayers/ol3/master/examples/data/icon.png'
+                })
+            })
+        });
+        map.addLayer(markerLayer);
+
+        // Add click event listener to the map
+        map.on('click', function(event) {
+            var clickedCoordinate = event.coordinate;
+            var lonLat = ol.proj.toLonLat(clickedCoordinate);
+            var longitude = lonLat[0];
+            var latitude = lonLat[1];
+
+            markerLayer.getSource().clear();
+
+            var marker = new ol.Feature({
+                geometry: new ol.geom.Point(clickedCoordinate)
+            });
+            markerLayer.getSource().addFeature(marker);
+
+            document.getElementById('evenement_latitude').value = latitude;
+            document.getElementById('evenement_longitude').value = longitude;
+        });
+    } else {
+        // Modifying an existing map
+        var map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM({
+                        attributions: [] 
+                    })
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([longitude, latitude]),
+                zoom: 10
+            })
+        });
+
+        var markerLayer = new ol.layer.Vector({
+            source: new ol.source.Vector(),
+            style: new ol.style.Style({
+                image: new ol.style.Icon({
+                    anchor: [0.5, 1],
+                    src: 'https://cdn.rawgit.com/openlayers/ol3/master/examples/data/icon.png'
+                })
+            })
+        });
+        map.addLayer(markerLayer);
+
+        var marker = new ol.Feature({
+            geometry: new ol.geom.Point(ol.proj.fromLonLat([longitude, latitude]))
+        });
+        markerLayer.getSource().addFeature(marker);
+
+        map.on('click', function(event) {
+            var clickedCoord = event.coordinate;
+            var clickedLonLat = ol.proj.toLonLat(clickedCoord);
+
+            document.getElementById('evenement_latitude').value = clickedLonLat[1];
+            document.getElementById('evenement_longitude').value = clickedLonLat[0];
+
+            markerLayer.getSource().clear();
+
+            var newMarker = new ol.Feature({
+                geometry: new ol.geom.Point(clickedCoord)
+            });
+            markerLayer.getSource().addFeature(newMarker);
+        });
+    }
+
+    function searchAddress() {
+        var address = document.getElementById('addressInput').value;
+
+        fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(address))
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    var latitude = parseFloat(data[0].lat);
+                    var longitude = parseFloat(data[0].lon);
+
+                    map.getView().setCenter(ol.proj.fromLonLat([longitude, latitude]));
+                    map.getView().setZoom(13);
+
+                    markerLayer.getSource().clear();
+
+                    var marker = new ol.Feature({
+                        geometry: new ol.geom.Point(ol.proj.fromLonLat([longitude, latitude]))
+                    });
+                    markerLayer.getSource().addFeature(marker);
+
+                    document.getElementById('evenement_latitude').value = latitude;
+                    document.getElementById('evenement_longitude').value = longitude;
+                } else {
+                    alert('Aucun résultat trouvé pour l\'adresse saisie. Veuillez réessayer.');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors de la recherche de l\'adresse :', error);
+                alert('Une erreur s\'est produite lors de la recherche de l\'adresse. Veuillez réessayer.');
+            });
+    }
+</script>
+
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,164 @@
+{% extends 'publication/demande/add.html.twig' %}
+{% block body %}
+{% block Header %}
+{{ parent() }}
+{% endblock %}
+<main id="main">
+ <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>La publication </h2>
+          {#<ol>
+            <li><a href="index.html">Home</a></li>
+            <li>Blog</li>
+          </ol>#}
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+ <!-- ======= Blog Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <div class="col-lg-8 entries">
+          <div class="read-more">
+
+<article class="entry">
+
+               <div class="entry-img">
+                                <img src="{{ asset('uploads/' ~ publication.imagepub) }}" alt="" class="img-fluid">
+                            </div>
+              <h2 class="entry-title">
+                <a href="{{ path('pub_show', {'id': publication.id}) }}">{{ publication.topicofpub}}</a>
+              </h2>
+
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">{{ publication.getPublicationuser().prenom}}  {{ publication.getPublicationuser().nom}}</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime=publication.dateofpub>{{ publication.dateofpub ? publication.dateofpub|date('Y-m-d') : '' }}</time></a></li>
+                 
+                </ul>
+              </div>
+
+              <div class="entry-content">
+                <p>
+                  {{ publication.publication }}
+                </p>
+
+                                              <h4>Modifier votre commentaire!</h4>
+                <p></p>
+<div class="row">
+    {{ form_start(formmodifiercommentaire, {'attr': {'novalidate': 'novalidate'}}) }}
+    
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="comment-img">
+                    <img src="{{ asset('uploads/images/' ~ user.image) }}" class="img-fluid rounded-circle" style="max-width: 50px; height: auto;">
+                </div>
+            </div>
+
+            <div class="col-md-10">
+                <div>{{ form_widget(formmodifiercommentaire.comment) }}</div> 
+                <div>{{ form_errors(formmodifiercommentaire.comment) }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <!-- Add any additional form fields or content for the second half of the row here -->
+    </div>
+    
+    {{ form_end(formmodifiercommentaire) }}
+</div>
+
+
+        </div><!-- End blog comments -->
+                
+               
+                   
+                   
+                                   
+
+              </div>
+
+            </article><!-- End blog entry -->
+
+ </main>
+{% block footer %}
+<!-- ======= Footer ======= -->
+    <footer id="footer">
+
+        <div class="footer-top  ">
+            <div class="container ">
+                <div class="footer-contact text-center  ">
+
+                 <a href="index.html" class="logo"><img src="{{asset('assets/img/logo1.png')}}"  alt="texte alternatif" width=5% height=5% class="img-fluid"></a>
+                    <h3>ECOPARTAGE</h3>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">acceuil</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Publication</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">dépôts</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Produits</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Formations</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">événements</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div class="text-center footer-newsletter">
+
+                        <div class="social-links text-center text-md-right pt-3 pt-md-0">
+                            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </footer><!-- End Footer -->
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,262 @@
+{% extends 'publication/demande/add.html.twig' %}
+{% block body %}
+{% block Header %}
+{{ parent() }}
+{% endblock %}
+<main id="main">
+<!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>La demande </h2>
+          {#<ol>
+            <li><a href="index.html">Home</a></li>
+            <li>Blog</li>
+          </ol>#}
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+ <!-- ======= Blog Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <div class="col-lg-8 entries">
+          <div class="read-more">
+
+<article class="entry">
+
+              
+              <h2 class="entry-title">
+                <a href="{{ path('demande_show', {'id': demande.id}) }}">{{ demande.nameofobj}}</a>
+              </h2>
+              <h2 class="entry-title">
+                <a href="{{ path('demande_show', {'id': demande.id}) }}">{{ demande.stateofdem}}</a>
+              </h2>
+
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">{{ demande.demandeuser.prenom}} {{ demande.demandeuser.nom}}</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime=demande.dateofdem>{{ demande.dateofdem ? demande.dateofdem|date('Y-m-d') : '' }}</time></a></li>
+                 
+                </ul>
+              </div>
+
+              <div class="entry-content">
+    <p>{{ demande.demande }}</p>
+    <p id="full-description" style="display: none;">
+        {{ demande.demande }}
+    </p>
+    <button onclick="toggleSpeech()" class="custom-play-button">
+        <i id="play-icon" class="bi bi-play"></i> Lire la demande
+    </button>
+
+    <div class="blog-comments">
+
+              <h4 class="comments-count">{{ demande.getNumberOfComments() }} contacts</h4>
+              {% for demandecomment in demande.getComments() %}
+                            <div id="comment-1" class="comment">
+                <div class="d-flex">
+                 <div class="comment-img"><img src="{{ asset('uploads/images/' ~ demandecomment.getCommentpubdemuser().image) }}" class="img-fluid rounded-circle" style="width: 50px; height: 50px;"></div>
+                                   <div>
+                    <h5><a>{{demandecomment.getCommentpubdemuser().image}}</a> <a>{{demandecomment.getCommentpubdemuser().nom}}</a>   
+                                    {% if app.user == demandecomment.getCommentpubdemuser() %}                     
+                    <a href="{{ path('app_modifier_commentairedem', {'id': demandecomment.id}) }}" class="bi bi-pencil-square" style="color: green;" ></a>    
+                    <a href="{{ path('app_supprimer_commentaire_utilisateurdem', {'id': demandecomment.id} ) }}" onclick="return confirm('Voulez-vous vraiment supprimer cette commentaire ?')" >
+  <i class="bi bi-trash" style="color: green;"></i>
+</a>{% endif %}
+
+                    <time datetime="{{ demandecomment.dateofcom|date('Y-m-d ') }}">{{ demandecomment.dateofcom|date('Y-m-d H:i') }}</time>             
+                    
+                                          <p>
+                        </p>
+                      <p>
+                          {{demandecomment.comment}}
+                        </p>
+                    </div>
+                  </div>
+                </div><!-- End comment #1 -->
+              {% else %}
+                    <p>
+              il n'ya pas des informations
+                    </p>
+                    {% endfor %}
+
+
+
+
+                    {{form_start(commentaire_form,{'attr':{'novalidate':'novalidate'}})}}
+              <div class="reply-form">
+                <h4>Contacter pour aide</h4>
+                <p></p>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col form-group">
+                    
+                     <div> Laisser votre contact </div>
+<div class="row">
+    <div class="col-md-1">
+        <div class="comment-img">
+            <img src="{{ asset('uploads/images/' ~ user.image) }}" class="img-fluid rounded-circle" style="max-width: 50px; height: 50px;">
+        </div>
+    </div>
+    <div class="col-md-11">
+        <div>{{ form_widget(commentaire_form.comment, {'attr': {'class': 'form-control', 'placeholder': 'fournit tes coordonnées...'}}) }}</div>
+        <div>{{ form_errors(commentaire_form.comment) }}</div>
+    </div>
+</div>
+
+                  </div>
+                  
+                                    <div class="row">
+                    <div class="col form-group">
+                <div>  {{ form_widget(commentaire_form.Commenter) }}</div>
+                    </div>
+                  </div>
+              </div>
+              {{form_end(commentaire_form)}}
+
+            </div><!-- End blog comments -->
+
+
+      <div class="read-more">
+                  <a href="{{ path('app_demande') }}">Retour à la liste</a>
+                                                {% if app.user == demande.demandeuser %}
+                    <a href="{{ path('demande_edit', {'id': demande.id}) }}">editer</a>
+                                               
+                    <a href="{{ path('demande_delete', {'id': demande.id}) }}" onclick="return confirm('Voulez-vous vraiment supprimer cet demande ?')"> supprimer</a>
+                                                 {% endif %}
+                               
+                   </div>
+                    
+                   
+                   
+                                   
+
+              </div>
+
+            </article><!-- End blog entry -->
+            <style>
+    .custom-play-button {
+        background-color: #28a745; /* Couleur verte */
+        color: #fff; /* Texte blanc */
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .custom-play-button:hover {
+        background-color: #218838; /* Couleur verte foncée au survol */
+    }
+</style>
+<script>
+    var isSpeaking = false;
+    var synth = window.speechSynthesis;
+    var utterance = new SpeechSynthesisUtterance();
+
+    // Set the language to French
+    utterance.lang = 'fr-FR';
+
+    function toggleSpeech() {
+        if (isSpeaking) {
+            synth.cancel();
+            document.getElementById('play-icon').classList.remove('bi-pause');
+            document.getElementById('play-icon').classList.add('bi-play');
+        } else {
+            var fullDescription = document.getElementById('full-description').textContent;
+            utterance.text = fullDescription;
+            synth.speak(utterance);
+            document.getElementById('play-icon').classList.remove('bi-play');
+            document.getElementById('play-icon').classList.add('bi-pause');
+        }
+
+        isSpeaking = !isSpeaking;
+    }
+</script>
+
+
+
+
+ </main>
+{% block footer %}
+<!-- ======= Footer ======= -->
+    <footer id="footer">
+
+        <div class="footer-top  ">
+            <div class="container ">
+                <div class="footer-contact text-center  ">
+
+                 <a href="index.html" class="logo"><img src="{{asset('assets/img/logo1.png')}}"  alt="texte alternatif" width=5% height=5% class="img-fluid"></a>
+                    <h3>ECOPARTAGE</h3>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">acceuil</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Publication</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">dépôts</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Produits</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Formations</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links">
+
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">événements</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div class="text-center footer-newsletter">
+
+                        <div class="social-links text-center text-md-right pt-3 pt-md-0">
+                            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </footer><!-- End Footer -->
+{% endblock %}
+{% endblock %}

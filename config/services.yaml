@@ -1,0 +1,47 @@
+# config/services.yaml
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\Security\UserAuthentificatorAuthenticator:
+        autowire: true
+
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    App\Service\FileUploader:
+        arguments:
+            $targetDirectory: '%kernel.project_dir%/public/uploads'
+
+
+    App\Service\BadWordFilterService:
+
+        class: App\Service\BadWordFilterService
+    
+
+    App\Service\MyGmailMailerService:
+        arguments:
+            $mailerConfig:
+                host: 'smtp.gmail.com'
+                port: 587
+                username: 'eco.partage24@gmail.com'
+                password: 'xijf ogit rxxo iqgv'
+                encryption: 'tls' # adjust based on your SMTP configuration
+                fromAddress: 'eco.partage24@gmail.com'
+                fromName: 'EcoPartage'
+
+
+    App\Service\EvenementStateService:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'            
+
+parameters:
+    image_directory:    '%kernel.project_dir%/public/uploads/images'

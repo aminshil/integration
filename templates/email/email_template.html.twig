@@ -1,0 +1,14 @@
+Bonjour,
+
+Un nouvel évènement a été créé :
+Nom de l'évènement : {{ evenement.nom }}
+Date de début : {{ evenement.dateDebut ? evenement.dateDebut|date('Y-m-d H:i') : '' }}
+Date de fin : {{ evenement.dateFin ? evenement.dateFin|date('Y-m-d H:i') : '' }}
+Période : {{ evenement.calculatePeriod() }}
+Description : {{ evenement.description }}
+Objectif : {{ evenement.objectif }}
+Formation : {{ evenement.formation ? 'Oui' : 'Non' }}
+
+Cordialement,
+L'équipe EcoPartage
+

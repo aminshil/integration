@@ -1,0 +1,11 @@
+endroid_qr_code:
+    size: 150
+    margin: 10
+    encoding: UTF-8
+    error_correction_level: high
+    foreground_color: { r: 0, g: 0, b: 0, a: 0 }
+    background_color: { r: 255, g: 255, b: 255, a: 0 }
+    validate_result: false
+    writer: '%kernel.project_dir%/public/uploads/qrcodes/your_qr_code_filename.png'
+    writer_options:
+        compress: true

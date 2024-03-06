@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Creér Votre Compte{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/animate/animate.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/css-hamburgers/hamburgers.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/animsition/css/animsition.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/select2/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/daterangepicker/daterangepicker.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/css/util.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('Login/css/main.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center align-items-center" style="height: 100vh;">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title text-center mb-4">Creér Votre Compte</h1>
+
+                        {% for flash_error in app.flashes('verify_email_error') %}
+                            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                        {% endfor %}
+
+                        {{ form_start(registrationForm, {attr: {'novalidate': 'novalidate'}, 'class': 'login100-form validate-form p-l-55 p-r-55 p-t-178'}) }}
+                        
+                        <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter Nom">
+                            {{ form_row(registrationForm.nom, { 'attr': {'class': 'form-control', 'placeholder': 'Nom'} }) }}
+                            <span class="focus-input100"></span>
+                        </div>
+
+                        <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter Prenom">
+                            {{ form_row(registrationForm.prenom, { 'attr': {'class': 'form-control', 'placeholder': 'Prenom'} }) }}
+                            <span class="focus-input100"></span>
+                        </div>
+
+                        <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter Date de Naissance">
+                            {{ form_widget(registrationForm.dateDeNaissance, { 'attr': {'class': 'form-control', 'placeholder': 'Date de Naissance'}, 'row_attr': {'class': registrationForm.dateDeNaissance.vars.errors|length ? 'has-error' : ''} }) }}
+                            {% if registrationForm.dateDeNaissance.vars.errors|length %}
+                                <div class="text-danger">
+                                    {% for error in registrationForm.dateDeNaissance.vars.errors %}
+                                        {{ error.message }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <span class="focus-input100"></span>
+                        </div>
+
+                        <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter Email">
+                            {{ form_row(registrationForm.email, { 'attr': {'class': 'form-control', 'placeholder': 'Email'} }) }}
+                            <span class="focus-input100"></span>
+                        </div>
+
+                        <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter Password">
+                            {{ form_row(registrationForm.plainPassword, { 'attr': {'class': 'form-control', 'placeholder': 'Password'} }) }}
+                            <span class="focus-input100"></span>
+                        </div>
+
+                        <div class="wrap-input100 validate-input m-b-16" data-validate="Please agree to terms">
+                            {{ form_row(registrationForm.agreeTerms, { 'label_attr': {'class': 'form-check-label'}, 'attr': {'class': 'form-check-input'} }) }}
+                            <span class="focus-input100"></span>
+                        </div>
+
+                        <div class="wrap-input100 validate-input m-b-16" data-validate="Please select Role">
+                            {{ form_row(registrationForm.role, { 'attr': {'class': 'form-select'}, 'label': 'Select Role'}) }}
+                            <span class="focus-input100"></span>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-block">Register</button>
+                        </div>
+
+                        {{ form_end(registrationForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('Login/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('Login/vendor/animsition/js/animsition.min.js') }}"></script>
+    <script src="{{ asset('Login/vendor/bootstrap/js/popper.js') }}"></script>
+    <script src="{{ asset('Login/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('Login/vendor/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('Login/vendor/daterangepicker/moment.min.js') }}"></script>
+    <script src="{{ asset('Login/vendor/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('Login/vendor/countdowntime/countdowntime.js') }}"></script>
+    <script src="{{ asset('Login/js/main.js') }}"></script>
+{% endblock %}

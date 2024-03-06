@@ -1,0 +1,130 @@
+{% extends 'evenement/listevenements.html.twig' %}
+{%  block body %}
+{% block header %}
+{{ parent() }}
+{% endblock %}
+{% block sidebar %}
+{{ parent() }}
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+<main id="main" class="main">
+    
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Évènement</h5>
+
+            <nav >
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/AfficheAdmin">Acceuil</a></li>
+                    <li class="breadcrumb-item active"><a href="/listevenements">Évènement</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class=" col-sm-6 ">
+
+            <div class="card ">
+                <div class="card-body  ">
+                <p></p>
+{{form_start(formmodifier,{'attr':{'novalidate':'novalidate'}})}}
+<table>
+
+<tr>
+    <td>{{ form_label(formmodifier.nom) }}</td>
+    <td>{{ form_widget(formmodifier.nom, {'attr': {'class': 'form-control'}}) }}</td>
+    <td>{{ form_errors(formmodifier.nom) }}</td>
+</tr>
+
+
+<tr>
+    <td>{{ form_label(formmodifier.description) }}</td>
+    <td colspan="2">{{ form_widget(formmodifier.description, {'attr': {'class': 'form-control', 'rows': 5}}) }}</td>
+    <td>{{ form_errors(formmodifier.description) }}</td>
+</tr>
+
+
+<tr>
+
+    <td>{{ form_label(formmodifier.date_debut) }}</td>
+   <td> {{ form_widget(formmodifier.date_debut, {'attr': {'type':'date','class': 'form-control'}}) }}</td>
+    <td>{{ form_errors(formmodifier.date_debut) }}</td>
+</tr>
+
+
+<tr>
+
+    <td>{{ form_label(formmodifier.date_fin) }}</td>
+    <td>{{ form_widget(formmodifier.date_fin, {'attr': {'type':'date','class': 'form-control'}}) }}</td>
+    <td>{{ form_errors(formmodifier.date_fin) }}</td>
+</tr>
+
+
+<tr>
+
+   <td> {{ form_label(formmodifier.objectif) }}</td>
+   <td> {{ form_widget(formmodifier.objectif, {'attr': {'class': 'form-control', 'rows': 5}}) }}</td>
+   <td> {{ form_errors(formmodifier.objectif) }}</td>
+
+</tr>
+
+<tr>
+
+   <td> {{ form_label(formmodifier.formation) }}</td>
+   <td> {{ form_widget(formmodifier.formation, {'attr': {'class': 'form-control'}}) }}</td>
+   <td> {{ form_errors(formmodifier.formation) }}</td>
+</tr>
+            <tr>
+                <td>{{ form_label(formmodifier.image) }}</td>
+                <td>{{ form_widget(formmodifier.image, {'attr': {'class': 'form-control'}}) }}</td>
+                <td>{{ form_errors(formmodifier.image) }}</td>
+            </tr>
+
+
+<tr>
+
+   <td> {{ form_label(formmodifier.locationtext) }}</td>
+   <td> {{ form_widget(formmodifier.locationtext, {'attr': {'class': 'form-control'}}) }}</td>
+   <td> {{ form_errors(formmodifier.locationtext) }}</td>
+
+</tr>
+<tr style="height: 10px;"></tr>
+
+
+ <tr>
+                    <td>Location:</td>
+                    <td colspan="2">
+                            <input class='form-control' type="text" id="addressInput" placeholder="Entrer une adresse pour chercher dans la map">
+        <button class='form-control' type="button" onclick="searchAddress()">Chercher</button>
+                        <div id="map" style="width: 600px; height: 400px;"></div>
+                        
+                        {{ form_widget(formmodifier.latitude, {'attr': {'class': 'hidden', 'id': 'evenement_latitude'}}) }}
+                        {{ form_widget(formmodifier.longitude, {'attr': {'class': 'hidden', 'id': 'evenement_longitude'}}) }}
+                    </td>
+                </tr>
+
+</table>
+<p></p>
+{{ form_widget(formmodifier.Enregistrer, {'attr': {'class': 'form-control btn btn-success'}}) }}
+<hr>
+<button class='form-control' type="submit" formaction="{{ path('app_list_evenements') }}">Retour</button>
+
+{{form_end(formmodifier)}}
+</div></div></div></div>
+</main>
+
+
+
+
+{% endblock %}
+
+
+
+{% endblock %}  

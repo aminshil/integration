@@ -1,0 +1,242 @@
+{% extends 'utilisateur/index.html.twig' %}
+
+{% block body %}
+{% block header %}
+ <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center">
+            <a href="index.html" class="logo me-auto me-lg-0"><img src="{{asset('assets/img/logo1.png')}}" alt="" class="img-fluid"></a>
+
+
+            <h1 class="logo me-auto"><a href="index.html"><span>ECO</span>PARTAGE</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="{{asset('assets/img/logo.png')}}" alt="" class="img-fluid"></a>-->
+
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                <ul>
+                    <li><a href="index.html" class="active">acceuil</a></li>
+
+                    <li class="dropdown"><a href="#"><span>Publication</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="/demande">Demande</a></li>
+                            <li><a href="/publication">Actualités</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="services.html">dépôts</a></li>
+                    <li><a href="portfolio.html">Produits</a></li>
+                    <li><a href="pricing.html">Formations</a></li>
+                    <li><a href="{{ path('app_list_evenements_utilisateur') }}">Évènements</a></li>
+                     <li class="nav-item dropdown pe-3">
+  
+  
+        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+    {% if user.image is defined and user.image is not empty %}
+        <img src="{{ asset('uploads/images/' ~ user.image) }}" class="rounded-circle" width="30" height="30">
+    {% endif %}
+
+
+          <span class="d-none d-md-block dropdown-toggle ps-2">{{ user.prenom }} {{ user.nom }}</span>
+        </a><!-- End Profile Iamge Icon -->
+</a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+          <li class="dropdown-header">
+            <h6>{{ user.prenom }} {{ user.nom }}</h6>
+           
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <i class="bi bi-person"></i>
+              <span>My Profile</span>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <i class="bi bi-gear"></i>
+              <span>Account Settings</span>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            {% if not user.isVerified %}
+    <a class="dropdown-item d-flex align-items-center"  
+    href="{{ path('handle_password_reset') }}">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Reset Password</span>
+    </a>
+{% endif %}
+
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="{{ path('app_logout') }}">
+    <i class="bi bi-box-arrow-right"></i>
+    <span>Sign Out</span>
+</a>
+          </li>
+
+ 
+
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+
+
+        </div>
+    </header>
+    {% endblock %}
+
+    <main id="main">
+        <!-- ======= Breadcrumbs ======= -->
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Actualités</h2>
+                </div>
+            </div>
+        </section><!-- End Breadcrumbs -->
+
+        <!-- ======= Blog Section ======= -->
+        <section id="blog" class="blog">
+            <div class="container" data-aos="fade-up">
+
+               <div class="read-more">
+                            <a href="{{ path('app_addpub') }}" class="btn btn-success">Ajouter une publication</a>
+                            <p></p>
+                        </div>
+            
+                <div class="row">
+                    <div class="col-lg-8 entries">
+                    
+                        {% for i in pagination %}
+                            <article class="entry">
+                                <div class="entry-img">
+                                    <img src="{{ asset('uploads/' ~ i.imagepub) }}" alt="" class="img-fluid">
+                                </div>
+
+                                <h2 class="entry-title">
+                                    <a href="{{ path('pub_show', {'id': i.id}) }}">{{ i.topicofpub }}</a>
+                                </h2>
+
+                                <div class="entry-meta">
+                                    <ul>
+                                        <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
+                                                href="#">{{ i.publicationuser.prenom }} {{ i.publicationuser.nom }}</a></li>
+                                        <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
+                                                href="blog-single.html"><time
+                                                    datetime=i.dateofpub>{{ i.dateofpub ? i.dateofpub|date('Y-m-d') : '' }}</time></a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="entry-content">
+                                    <p>
+                                        {{ badWordFilter.filterBadWords(i.publication) }}
+                                    </p>
+                                    <div class="read-more">
+                                        <a href="{{ path('pub_show', {'id': i.id}) }}">Afficher plus</a>
+                                  {% if app.user == i.publicationuser %}      <a href="{{ path('pub_edit', {'id': i.id}) }}">Editer</a>
+                                        <a href="{{ path('pub_delete', {'id': i.id}) }}" onclick="return confirm('Voulez-vous vraiment supprimer cet publication ?')">Supprimer</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                            </article><!-- End blog entry -->
+                        {% else %}
+                            <tr>
+                                <td colspan="9">Il n'y a pas de publication</td>
+                            </tr>
+                        {% endfor %}
+                        <div style="text-align: center;">
+                        <style>
+                            /* Styles pour la pagination */
+                            .custom-pagination {
+                                list-style: none;
+                                display: flex;
+                                justify-content: center;
+                                padding: 0;
+                            }
+
+                            .custom-pagination li {
+                                margin: 0 5px;
+                                display: inline-block;
+                            }
+
+                            .custom-pagination a {
+                                text-decoration: none;
+                                color: #4CAF50; /* Vert */
+                                padding: 10px 15px;
+                                border: 2px solid #4CAF50;
+                                border-radius: 5px;
+                                background-color: transparent;
+                                transition: background-color 0.3s, color 0.3s;
+                            }
+
+                            .custom-pagination a:hover {
+                                background-color: #4CAF50;
+                                color: #fff;
+                            }
+
+                            .custom-pagination .active a {
+                                background-color: #4CAF50;
+                                color: #fff;
+                                border: 2px solid #4CAF50;
+                            }
+                        </style>
+
+                        <div class="custom-pagination">
+                            <ul>
+                                {{ knp_pagination_render(pagination) }}
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+                    
+                    </div>
+                    <div class="col-lg-4">
+
+            <div class="sidebar">
+
+              <h3 class="sidebar-title">Search</h3>
+              <div class="sidebar-item search-form">
+                
+              <form method="get" action="{{ path('app_pub') }}">
+                    <div class="form-group">
+                        <label for="keyword"></label>
+                        <input type="text" id="keyword" name="keyword" class="form-control" value="{{ keyword }}">
+                    </div>
+                    <button type="submit"><i class="bi bi-search"></i></button>
+                </form>
+
+          </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {% block footer %}
+        <!-- ======= Footer ======= -->
+        <footer id="footer">
+            <div class="footer-top">
+                <div class="container">
+                    <!-- Your existing footer code -->
+                </div>
+            </div>
+        </footer><!-- End Footer -->
+    {% endblock %}
+{% endblock %}

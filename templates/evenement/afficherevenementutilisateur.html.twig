@@ -1,0 +1,292 @@
+{% extends 'evenement/listevenementsutilisateur.html.twig' %}
+
+
+
+{% block title %}{{ evenement.nom }}{% endblock %}
+
+
+{%  block body %}
+
+{% block header %}
+{{ parent() }}
+{% endblock %}
+
+<style>
+    .entry-single img {
+        width: 100%;
+        height: 100%; /* Maintain aspect ratio */
+    }
+</style>
+      <style>
+
+
+        #footer {
+            margin-top: auto;
+            width: 100%;
+            bottom: 0;
+
+        }
+
+
+        
+    </style>
+
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+
+
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Évènement</h2>
+          <ol>
+            <li><a href="{{ path('app_list_evenements_utilisateur') }}">List des évènements</a></li>
+           {# <li><a href="blog.html">Blog</a></li>#}
+            <li>{{ evenement.nom }}</li>
+          </ol>  
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+  
+
+    <!-- ======= Blog Single Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <div class="col-lg-8 entries">
+
+            <article class="entry entry-single">
+
+              <div>
+                <img src={{asset('uploads/' ~ evenement.image)}} class="img-fluid" style="max-width: 100%;" >
+              </div>
+
+                                            
+
+                <p></p>
+              <h2 class="entry-title">
+                <a href="blog-single.html">{{ evenement.nom }}</a>
+              </h2>
+<div class="read-more">
+{{evenement.updateEtat()}}
+    {% if evenement.etat != 'finis' %}
+{% if evenement.participationevenement.contains(user) %}
+    <form action="{{ path('app_unparticipate', {'id': evenement.id}) }}" method="post">
+        <button type="submit" class="btn btn-danger">Annuler Participation</button>
+    </form>
+{% else %}
+    <form action="{{ path('app_participate', {'id': evenement.id}) }}" method="post">
+        <button type="submit" class="btn btn-success">Participer</button>
+    </form>
+{% endif %}
+    {% endif %}
+</div>
+ <p></p>
+
+ <div class="entry-meta">
+                <ul>
+{% if evenement.etat == 'finis' %}
+    <i class="fas fa-check-circle" style="color: green;"></i> Finis
+{% elseif evenement.etat == 'en cours' %}
+    <i class="fas fa-spinner fa-spin" style="color: orange;"></i> En cours
+{% elseif evenement.etat == 'à venir' %}
+    <i class="far fa-calendar-alt" style="color: blue;"></i> À venir
+{% endif %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+                </ul>
+              </div>
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">Createur</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime=evenement.dateDebut>{{ evenement.dateDebut ? evenement.dateDebut|date('Y-m-d H:i') : '' }}</time></a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime=evenement.dateFin>{{ evenement.dateFin ? evenement.dateFin|date('Y-m-d H:i') : '' }}</time></a></li>
+                  <li> Période : {{ evenement.calculatePeriod() }} </li>
+                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="{{ path('app_afficher_evenement_utilisateur', {'id': evenement.id}) }}">{{ evenement.getNumberOfComments() }}</a></li>
+
+                </ul>
+              </div>
+
+              <div class="entry-content">
+                                <p>
+                            <h3>Adresse : 
+                  {{ evenement.locationtext }}</h3>    
+                </p>
+
+
+                <p>
+                  {{ evenement.description }}
+                </p>
+                        {#
+                <blockquote>
+                  <p>
+                    Et vero doloremque tempore voluptatem ratione vel aut. Deleniti sunt animi aut. Aut eos aliquam doloribus minus autem quos.
+                  </p>
+                </blockquote>
+
+                <p>
+                  Sed quo laboriosam qui architecto. Occaecati repellendus omnis dicta inventore tempore provident voluptas mollitia aliquid. Id repellendus quia. Asperiores nihil magni dicta est suscipit perspiciatis. Voluptate ex rerum assumenda dolores nihil quaerat.
+                  Dolor porro tempora et quibusdam voluptas. Beatae aut at ad qui tempore corrupti velit quisquam rerum. Omnis dolorum exercitationem harum qui qui blanditiis neque.
+                  Iusto autem itaque. Repudiandae hic quae aspernatur ea neque qui. Architecto voluptatem magni. Vel magnam quod et tempora deleniti error rerum nihil tempora.
+                </p>
+                          #}
+                <h3>Objectif</h3>
+                <p>
+                  {{ evenement.objectif }}
+                </p>
+                <h3>Formation</h3>
+                 <p>
+{{ evenement.formation ? 'Oui' : 'Non' }}
+</p>
+                <h3>La localisation de l'évènement:</h3>
+                <p>
+      <div id="map" style="width: 100%; height: 400px;"></div>
+                </p>
+
+
+              </div>
+{#
+              <div class="entry-footer">
+                <i class="bi bi-folder"></i>
+                <ul class="cats">
+                  <li><a href="#">Business</a></li>
+                </ul>
+
+                <i class="bi bi-tags"></i>
+                <ul class="tags">
+                  <li><a href="#">Creative</a></li>
+                  <li><a href="#">Tips</a></li>
+                  <li><a href="#">Marketing</a></li>
+                </ul>
+              </div>
+
+            </article><!-- End blog entry -->
+
+            <div class="blog-author d-flex align-items-center">
+              <img src="assets/img/blog/blog-author.jpg" class="rounded-circle float-left" alt="">
+              <div>
+                <h4>Jane Smith</h4>
+                <div class="social-links">
+                  <a href="https://twitters.com/#"><i class="bi bi-twitter"></i></a>
+                  <a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
+                  <a href="https://instagram.com/#"><i class="biu bi-instagram"></i></a>
+                </div>
+                <p>
+                  Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus accusantium. Quas repellat voluptatem officia numquam sint aspernatur voluptas. Esse et accusantium ut unde voluptas.
+                </p>
+              </div>
+            </div><!-- End blog author bio -->
+#}
+
+
+            <div class="blog-comments">
+
+              <h4 class="comments-count">{{ evenement.getNumberOfComments() }} Comments</h4>
+              {% for evenementcomment in evenement.commentaires %}
+              <div id="comment-1" class="comment">
+                <div class="d-flex">
+
+<div class="comment-img"> <img src="{{ asset('uploads/images/' ~ evenementcomment.getCommentaireuser().image) }}" class="img-fluid rounded-circle" style="width: 50px; height: 50px;"></div>
+                                   <div>
+                    <h5><a>{{evenementcomment.getCommentaireuser().prenom}} {{evenementcomment.getCommentaireuser().nom}} </a>                    
+
+                    {% if app.user == evenementcomment.getCommentaireuser() %}
+                    <a href="{{ path('app_modifier_commentaire', {'id': evenementcomment.id}) }}" class="bi bi-pencil-square" style="color: green;" ></a>    
+                    <a href="{{ path('app_supprimer_commentaire_utilisateur', {'id': evenementcomment.id} ) }}" onclick="return confirm('Voulez-vous vraiment supprimer cette commentaire ?')" >
+  <i class="bi bi-trash" style="color: green;"></i>
+</a> {% endif %}
+
+                    <time datetime="{{ evenementcomment.datecreation|date('Y-m-d H:i') }}">{{ evenementcomment.datecreation|date('Y-m-d H:i') }}</time>             
+                    
+                                          <p>
+                        </p>
+                      <p>
+                          {{evenementcomment.contenu}}
+                        </p>
+                    </div>
+                  </div>
+                </div><!-- End comment #1 -->
+              {% else %}
+                    <p>
+              il n'ya pas des commentaires
+                    </p>
+                    {% endfor %}
+
+
+
+
+                    {{form_start(commentaire_form,{'attr':{'novalidate':'novalidate'}})}}
+              <div class="reply-form">
+                <h4>Laisser un commentaire</h4>
+                <p></p>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                                    
+
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col form-group">
+                    
+                     <div> Contenue de votre commentaire</div>
+                    <div>  {{ form_widget(commentaire_form.contenu, {'attr': {'placeholder': 'Ecrire un commentaire...', 'class': 'form-control'}}) }}</div>
+                    <div> {{ form_errors(commentaire_form.contenu) }}</li>
+                    </div>
+                  </div>
+                  
+                                    <div class="row">
+                    <div class="col form-group">
+                <div>  {{ form_widget(commentaire_form.Commenter, {'attr': {'class': 'form-control'}}) }}</div>
+                    </div>
+                  </div>
+              </div>
+              {{form_end(commentaire_form)}}
+
+            </div><!-- End blog comments -->
+
+          </div><!-- End blog entries list -->
+
+
+        </div>
+
+      </div>
+    </section><!-- End Blog Single Section -->
+
+  </main><!-- End #main -->
+
+{% block footer %}
+{{ parent() }}
+{% endblock %}
+
+
+    <!-- Include Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<!-- Map script -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+    // Initialize the map with the event's coordinates
+    var eventLocation = [{{ evenement.latitude }}, {{ evenement.longitude }}];
+    var map = L.map('map').setView(eventLocation, 14); // Adjust zoom level as needed
+
+    // Add the base map layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add marker for the event location
+    L.marker(eventLocation).addTo(map)
+        .bindPopup('{{ evenement.nom }}'); // Optional popup for the marker
+</script>
+
+
+  {% endblock %}
+  

@@ -1,0 +1,107 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Admin Dashboard</h1>
+
+        <!-- Search form -->
+        <div class="mb-3">
+            <form action="{{ path('admin_dashboard') }}" method="get" class="form-inline">
+                <label for="searchQuery" class="mr-2">Search:</label>
+                <input type="text" id="searchQuery" name="searchQuery" class="form-control" value="{{ searchQuery }}">
+                <button type="submit" class="btn btn-primary ml-2">Search</button>
+            </form>
+        </div>
+
+        <!-- Sort and filter options -->
+        <div class="mb-3">
+            <a href="{{ path('admin_dashboard', {'sortField': 'nom', 'sortOrder': 'asc', 'selectedRole': selectedRole, 'searchQuery': searchQuery}) }}" class="btn btn-primary">Sort by Name</a>
+            <a href="{{ path('admin_dashboard', {'sortField': 'id', 'sortOrder': 'asc', 'selectedRole': selectedRole, 'searchQuery': searchQuery}) }}" class="btn btn-primary">Sort by Id</a>
+            <a href="{{ path('admin_dashboard') }}" class="btn btn-primary">Par défaut</a>
+        </div>
+
+        <!-- Filter by Role -->
+        <div class="mb-3">
+            <label for="roleFilter">Filter by Role:</label>
+            <select id="roleFilter" name="selectedRole" onchange="location = this.value;" class="form-control">
+                <option value="{{ path('admin_dashboard', {'sortField': 'nom', 'sortOrder': 'asc', 'selectedRole': null, 'searchQuery': searchQuery}) }}" {% if not selectedRole %}selected{% endif %}>All Roles</option>
+                {% for role in roles %}
+                    <option value="{{ path('admin_dashboard', {'sortField': 'nom', 'sortOrder': 'asc', 'selectedRole': role, 'searchQuery': searchQuery}) }}" {% if selectedRole == role %}selected{% endif %}>{{ role }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- User table -->
+        <div class="table-responsive">
+            <table class="table table-striped table-hover" id="user-table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th data-orderable="true"><a href="{{ path('admin_dashboard', {'sortField': 'id', 'sortOrder': sortField == 'id' and sortOrder == 'asc' ? 'desc' : 'asc', 'selectedRole': selectedRole, 'searchQuery': searchQuery}) }}">Id</a></th>
+                        <th data-orderable="true"><a href="{{ path('admin_dashboard', {'sortField': 'email', 'sortOrder': sortField == 'email' and sortOrder == 'asc' ? 'desc' : 'asc', 'selectedRole': selectedRole, 'searchQuery': searchQuery}) }}">Email</a></th>
+                        <th data-orderable="true"><a href="{{ path('admin_dashboard', {'sortField': 'nom', 'sortOrder': sortField == 'nom' and sortOrder == 'asc' ? 'desc' : 'asc', 'selectedRole': selectedRole, 'searchQuery': searchQuery}) }}">Nom</a></th>
+                        <th data-orderable="true"><a href="{{ path('admin_dashboard', {'sortField': 'email', 'sortOrder': sortField == 'email' and sortOrder == 'asc' ? 'desc' : 'asc', 'selectedRole': selectedRole, 'searchQuery': searchQuery}) }}">Email</a></th>
+                        <th data-orderable="true"><a href="{{ path('admin_dashboard', {'sortField': 'nom', 'sortOrder': sortField == 'nom' and sortOrder == 'asc' ? 'desc' : 'asc', 'selectedRole': selectedRole, 'searchQuery': searchQuery}) }}">Nom</a></th>
+                        <th data-orderable="true"><a href="{{ path('admin_dashboard', {'sortField': 'prenom', 'sortOrder': sortField == 'prenom' and sortOrder == 'asc' ? 'desc' : 'asc', 'selectedRole': selectedRole, 'searchQuery': searchQuery}) }}">prenom</a></th>
+                        <th data-orderable="true"><a href="{{ path('admin_dashboard', {'sortField': 'role', 'sortOrder': sortField == 'role' and sortOrder == 'asc' ? 'desc' : 'asc', 'selectedRole': selectedRole, 'searchQuery': searchQuery}) }}">role</a></th>                        <th data-orderable="false">Actions</th>
+                    </tr>
+                
+                </thead>
+
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                {% if user.roles|length > 0 %}
+                                    {{ user.roles[0] }}
+                                {% else %}
+                                    No roles assigned
+                                {% endif %}
+                            </td>
+                            <td>{{ user.nom }}</td>
+                            <td>{{ user.prenom }}</td>
+                            <td>{{ user.image }}</td>
+                            <td>{{ user.dateDeNaissance ? user.dateDeNaissance|date('Y-m-d') : '' }}</td>
+                            <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                            <td>
+                                <a href="{{ path('app_user_show', {'id': user.id}) }}" class="btn btn-primary btn-sm">Show</a>
+                                <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-secondary btn-sm">Edit</a>
+
+                                {% if user.isBlocked %}
+                                    <form action="{{ path('app_unblock', {'id': user.id}) }}" method="post" style="display: inline;">
+                                        <button type="submit" class="btn btn-warning btn-sm">Unblock</button>
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('unblock' ~ user.id) }}">
+                                    </form>
+                                {% else %}
+                                    <form action="{{ path('app_block', {'id': user.id}) }}" method="post" style="display: inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm">Block</button>
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('block' ~ user.id) }}">
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="10">No records found</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Button to Display Graph -->
+        <div class="mt-3">
+            <button class="btn btn-primary" onclick="displayGraph()">Display Graph</button>
+        </div>
+
+        <!-- Graph Canvas -->
+        <div class="mt-4">
+            <canvas id="userStatsChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
+   
+{% endblock %}

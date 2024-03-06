@@ -1,0 +1,318 @@
+{% extends 'evenement/listevenementsutilisateur.html.twig' %}
+{% block title %}List évènement finis{% endblock %}
+{%  block body %}
+{% block header %}
+{{ parent() }}
+{% endblock %}
+
+
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Évènements Finis</h2>
+          {#<ol>
+            <li><a href="index.html">Home</a></li>
+            <li>Blog</li>
+          </ol>#}
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+<style>
+.gold-text {
+    color: gold;
+}
+
+.btn-primaryyy {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    margin-left: calc(100% - 400px);
+    position: fixed;
+    bottom: 700px;
+}
+
+.btn-primaryyy:hover {
+    background-color: #007bff; /* Change to a darker shade of blue on hover */
+}
+</style>
+
+<div class="event-list">
+  <a href="{{ path('app_list_evenements_utilisateur') }}" class="btn btn-primaryyy">Liste des évènements</a>
+</div>
+
+<div class="dropdown">
+  <button class="btn btn-primarytri dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Trier Par
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+<a class="dropdown-item" href="{{ path('app_list_evenements_finis_utilisateur', {'sort_by': 'nom', 'sort_order': sort_order == 'asc' ? 'desc' : 'asc'}) }}">Nom</a>
+<a class="dropdown-item" href="{{ path('app_list_evenements_finis_utilisateur', {'sort_by': 'date_debut', 'sort_order': sort_order == 'asc' ? 'desc' : 'asc'}) }}">Date de début</a>
+<a class="dropdown-item" href="{{ path('app_list_evenements_finis_utilisateur', {'sort_by': 'period', 'sort_order': sort_order == 'asc' ? 'desc' : 'asc'}) }}">Période</a>
+<a class="dropdown-item" href="{{ path('app_list_evenements_finis_utilisateur', {'sort_by': 'Nbrparticipants', 'sort_order': sort_order == 'asc' ? 'desc' : 'asc'}) }}">Nombre de participants</a>
+<a class="dropdown-item" href="{{ path('app_list_evenements_finis_utilisateur', {'sort_by': 'NumberOfComment', 'sort_order': sort_order == 'asc' ? 'desc' : 'asc'}) }}">Nombre de commentaires</a>
+  </div>
+</div>
+    <!-- ======= Blog Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <div class="col-lg-8 entries">
+
+
+    
+              <style>
+        .entries .entry img {
+            width: 100%;
+            height: auto; /* Maintain aspect ratio */
+
+            
+        }
+        .hover {
+  color: orange;
+}
+
+
+.btn-primarytri:hover {
+    background-color: #007bff;
+}
+
+.btn-primarytri {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    margin-left: calc(100% - 400px);
+    position: fixed;
+    bottom: 650px;
+}
+
+/* Style for the dropdown menu */
+.dropdown-menu {
+    background-color: #fff; /* Background color of the dropdown menu */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for the dropdown menu */
+    border: none; /* Remove border from the dropdown menu */
+}
+
+/* Style for dropdown items */
+.dropdown-item {
+    color: #000; /* Text color of dropdown items */
+    padding: 8px 16px; /* Padding for dropdown items */
+    transition: background-color 0.3s; /* Transition effect for background color */
+}
+
+/* Hover and focus styles for dropdown items */
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: #f8f9fa; /* Background color on hover/focus */
+    color: #000; /* Text color on hover/focus */
+}
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha512-A+grZjrvSxGHCXZP/UGpFweCw5iRejrNcN3ELexwMm6Arl3OpEsAd3uD81+oD1r8D19GrYdqWWGLtM4iVtjeyA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% set finisFound = false %}
+
+{% for evenement in listevenements %}
+
+ {% if evenement.etat == 'finis' %}
+            <article class="entry">
+
+              <div class="entry-img">
+                <img src={{asset('uploads/' ~ evenement.image)}} class="img-fluid">
+              </div>
+
+              <h2 class="entry-title">
+                <a href="{{ path('app_afficher_evenement_utilisateur', {'id': evenement.id}) }}">{{ evenement.nom }}</a>
+
+                {% set finisFound = true %}
+{% if evenement.rating == NULL %}               
+<div class="rating" data-event-id="{{ evenement.id }}" data-rating="{{ evenement.rating }}">
+    <i class="star" data-note="1">&#9733;</i>
+    <i class="star" data-note="2">&#9733;</i>
+    <i class="star" data-note="3">&#9733;</i>
+    <i class="star" data-note="4">&#9733;</i>
+    <i class="star" data-note="5">&#9733;</i>
+</div>
+{% endif %}
+<style>
+    .stars {
+        font-size: 24px; /* Adjust the size of the stars */
+    }
+
+    .stars .star {
+        color: #ccc; /* Default color for empty stars */
+    }
+
+    .stars .star.filled {
+        color: gold; /* Color for filled stars */
+    }
+</style>
+
+<div class="rating-container">
+    <div class="stars">
+    <span class="note">Rating</span>
+        {% set rating = evenement.rating %}
+        {% for i in range(1, 5) %}
+            {% if rating >= i %}
+                <span class="star filled">&#9733;</span>
+            {% else %}
+                <span class="star">&#9734;</span>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+
+<br />
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const stars = document.querySelectorAll('.rating .star');
+        const noteElement = document.querySelector('.note');
+        let currentRating = parseInt(document.querySelector('.rating').dataset.rating);
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const rating = parseInt(star.dataset.note);
+                currentRating = rating;
+                noteElement.textContent = `Note: ${currentRating}`;
+
+                // Update the rating in the database
+                updateRating(currentRating);
+            });
+
+            star.addEventListener('mouseover', () => {
+                const hoverValue = parseInt(star.dataset.note);
+                highlightStars(hoverValue);
+            });
+
+            star.addEventListener('mouseleave', () => {
+                highlightStars(currentRating);
+            });
+        });
+
+        function highlightStars(value) {
+            stars.forEach(star => {
+                const note = parseInt(star.dataset.note);
+                if (note <= value) {
+                    star.classList.add('hover');
+                } else {
+                    star.classList.remove('hover');
+                }
+            });
+        }
+
+        function updateRating(rating) {
+            const evenementId = document.querySelector('.rating').dataset.eventId;
+            fetch(`/update_evenement_rating/${evenementId}?rating=${rating}`, {
+                method: 'POST',
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // You can handle the response here if needed
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        }
+    });
+</script>
+
+
+
+              </h2>
+<div class="entry-meta">
+                <ul>
+                <i class="fas fa-check-circle" style="color: green;"></i> Finis
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+                </ul>
+              </div>
+
+
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">{{ evenement.getUserEvenement().nom }} {{ evenement.getUserEvenement().prenom }}s</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="{{ path('app_afficher_evenement_utilisateur', {'id': evenement.id}) }}"><time datetime=evenement.dateDebut>{{ evenement.dateDebut ? evenement.dateDebut|date('Y-m-d H:i') : '' }}</time></a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="{{ path('app_afficher_evenement_utilisateur', {'id': evenement.id}) }}"><time datetime=evenement.dateFin>{{ evenement.dateFin ? evenement.dateFin|date('Y-m-d H:i') : '' }}</time></a></li>
+                   <li> Période : {{ evenement.calculatePeriod() }} </li>
+                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="{{ path('app_afficher_evenement_utilisateur', {'id': evenement.id}) }}">{{ evenement.getNumberOfComments() }}</a></li>
+                  <li> <i class="bi bi-people"></i> {{ evenement.participationevenement|length }}</li>
+                </ul>
+              </div>
+
+              <div class="entry-content">
+                            <h6>
+                                <p>
+                                Adresse : 
+                  {{ evenement.locationtext }}
+                </p>
+                </h6>
+                <p>
+                  {{ evenement.description }}
+                </p>
+                <div class="read-more">
+                  <a href="{{ path('app_afficher_evenement_utilisateur', {'id': evenement.id}) }}">Afficher plus</a>
+                                                <p></p>     
+
+                                              <a href="{{ path('app_afficher_evenement_utilisateur', {'id': evenement.id}) }}">Ajouter un commentaire</a>
+                   </div>
+                                   
+
+              </div>
+
+            </article><!-- End blog entry -->
+{% endif %}
+
+
+
+               
+
+
+        {% endfor %}
+
+    {% if not finisFound %}
+    
+        <h1>il n'y a pas d'évènement finis</h1>
+<div style="height: 45vh;"></div>
+    {% endif %}
+
+
+        </main>
+        
+        {#}
+
+            <div class="blog-pagination">
+              <ul class="justify-content-center">
+                <li><a href="#">1</a></li>
+                <li class="active"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+              </ul>
+            </div>
+
+          </div>
+#}
+
+{% block footer %}
+{{ parent() }}
+
+{% endblock %}
+
+          {% endblock %}
+
+       

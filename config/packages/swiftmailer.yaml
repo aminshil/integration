@@ -1,0 +1,19 @@
+# config/packages/swiftmailer.yaml
+
+swiftmailer:
+    transport: smtp
+    host: smtp.gmail.com
+    port: 587
+    encryption: tls
+    username: 'houssematia77@gmail.com'
+    password: 'Houssem10'
+    spool:
+        type: file
+        path: '%kernel.project_dir%/var/spool'
+    delivery_addresses: ['your_email@example.com'] # Optional: Set an email address to receive the debug output
+    stream_options:
+        ssl:
+            allow_self_signed: true
+            verify_peer: false
+            verify_peer_name: false
+    logging: true # Use boolean value instead of string
