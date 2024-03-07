@@ -1,5 +1,6 @@
 # config/services.yaml
 
+
 services:
     _defaults:
         autowire: true
@@ -45,3 +46,4 @@ services:
 
 parameters:
     image_directory:    '%kernel.project_dir%/public/uploads/images'
+    uploads_image : "%kernel.project_dir%/public/uploads/images/"

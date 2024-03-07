@@ -1,0 +1,43 @@
+{% extends 'index.html.twig' %}
+
+
+
+{% block title %}{{ Categorie.Nom }}{% endblock %}
+
+
+{%  block body %}
+
+
+{% block header %}
+>   {{ parent() }}
+{% endblock %}
+
+
+{% block body2 %}
+<div class="container">
+
+    <h1>Categorie</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td>{{ Categorie.Nom }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ Categorie.Description }}</td>
+            </tr>
+           
+        </tbody>
+    </table>
+    <a href="{{ path('app_list_Categories_utilisateur') }}" class="btn btn-primary">List Categories</a>
+
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+{{ parent() }}
+{% endblock %}
+{% endblock %}

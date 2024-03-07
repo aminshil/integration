@@ -1,0 +1,52 @@
+{% extends 'index.html.twig' %}
+
+
+
+{% block title %}{{ Depots.Nom }}{% endblock %}
+
+
+{%  block body %}
+
+
+{% block header %}
+>   {{ parent() }}
+{% endblock %}
+
+
+{% block body2 %}
+<div class="container">
+
+    <h1>Depots</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td>{{ Depots.Nom }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ Depots.Adresse }}</td>
+            </tr>
+           
+            <tr>
+                <th>Etat</th>
+                <td>{{ Depots.Etat }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ Depots.Image }}</td>
+            </tr>
+           
+        </tbody>
+    </table>
+    <a href="{{ path('app_list_Depots_utilisateur') }}" class="btn btn-primary">List Depots</a>
+
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+{{ parent() }}
+{% endblock %}
+{% endblock %}

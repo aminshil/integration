@@ -77,6 +77,9 @@
             "./config/packages/knpu_oauth2_client.yaml"
         ]
     },
+    "mercuryseries/flashy-bundle": {
+        "version": "v5.1.0"
+    },
     "php-http/discovery": {
         "version": "1.19",
         "recipe": {
