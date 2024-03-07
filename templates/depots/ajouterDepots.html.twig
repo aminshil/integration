@@ -1,0 +1,257 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top">
+<div class="container d-flex align-items-center">
+<a href="index.html" class="logo me-auto me-lg-0"><img src="{{asset('assets/img/logo1.png')}}" alt="" class="img-fluid"></a>
+
+
+<h1 class="logo me-auto"><a href="/Affiche"><span>ECO</span>PARTAGE</a></h1>
+<!-- Uncomment below if you prefer to use an image logo -->
+<!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="{{asset('assets/img/logo.png')}}" alt="" class="img-fluid"></a>-->
+
+<nav id="navbar" class="navbar order-last order-lg-0">
+<ul>
+       
+ <li class="dropdown"><a href="#"><span>Publication</span> <i class="bi bi-chevron-down"></i></a>
+<ul>
+<li><a href="about.html">Demande</a></li>
+<li><a href="team.html">Actualités</a></li>
+</ul>
+</li>
+<li class="dropdown"><a href="#"><span>Dépots</span> <i class="bi bi-chevron-down"></i></a>
+<ul>
+<li><a href="/ajouterDepots">Je Donne</a></li>
+<li><a href="/listDepotsutilisateur">Je Récupére</a></li>
+<li><a href="/listDepotsutilisateur">Voir Dépots</a></li>
+<li><a href="/listCategorieutilisateur">Voir Categorie</a></li>
+</ul>
+<li><a href="portfolio.html">Produits</a></li>
+<li><a href="pricing.html">Formations</a></li>
+<li><a href="blog.html">événements</a></li>
+<li><a href=login.html.twig">s'authentifier</a>
+</li>
+
+</ul>
+<i class="bi bi-list mobile-nav-toggle"></i>
+</nav><!-- .navbar -->
+<div class="header-social-links d-flex">
+<a href="#" class="twitter"><i class="bu bi-twitter"></i></a>
+<a href="#" class="facebook"><i class="bu bi-facebook"></i></a>
+<a href="#" class="instagram"><i class="bu bi-instagram"></i></a>
+<a href="#" class="linkedin"><i class="bu bi-linkedin"></i></a>
+</div>
+
+</div>
+</header><!-- End Header -->
+   <br></br>
+ 
+   
+{% block content %}
+        <div class="container mt-5">
+            {{ form_start(Depots_form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+            <div class="card shadow-lg p-4">
+                <h2 class="text-center mb-4">Ajouter un Dépôt</h2>
+                <table class="table">
+                    <tr>
+                        <td>{{ form_label(Depots_form.Nom) }}</td>
+                        <td>{{ form_widget(Depots_form.Nom, {'attr': {'class': 'form-control'}}) }}</td>
+                        <td>{{ form_errors(Depots_form.Nom) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(Depots_form.Adresse) }}</td>
+                        <td>{{ form_widget(Depots_form.Adresse, {'attr': {'class': 'form-control'}}) }}</td>
+                        <td>{{ form_errors(Depots_form.Adresse) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(Depots_form.Etat) }}</td>
+                        <td>{{ form_widget(Depots_form.Etat, {'attr': {'class': 'form-control'}}) }}</td>
+                        <td>{{ form_errors(Depots_form.Etat) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(Depots_form.Image) }}</td>
+                        <td>{{ form_widget(Depots_form.Image, {'attr': {'class': 'form-control'}}) }}</td>
+                        <td>{{ form_errors(Depots_form.Image) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(Depots_form.categorie) }}</td>
+                        <td>{{ form_widget(Depots_form.categorie, {'attr': {'class': 'form-control'}}) }}</td>
+                        <td>{{ form_errors(Depots_form.categorie) }}</td>
+                    </tr>
+                </table>
+<br></br><br></br>
+                <div class="d-flex justify-content-between align-items-center my-2">
+                    <button type="submit" class=""wrap"" formaction="{{ path('app_ajouter_Depots') }}">Ajouter Depots</button>
+                    <button type="submit" class="btn btn-secondary" formaction="{{ path('app_list_Depots_utilisateur') }}">Retour Depots</button>
+                </div>
+            </div>
+<style>
+  button{
+  .wrap {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  min-width: 300px;
+  min-height: 60px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  color: #313133;
+  background: #4FD1C5;
+  background: linear-gradient(90deg, rgba(129,230,217,1) 0%, rgba(79,209,197,1) 100%);
+  border: none;
+  border-radius: 1000px;
+  box-shadow: 12px 12px 24px rgba(79,209,197,.64);
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  padding: 10px;
+  before {
+  content: '';
+  border-radius: 1000px;
+  min-width: calc(300px + 12px);
+  min-height: calc(60px + 12px);
+  border: 6px solid #00FFCB;
+  box-shadow: 0 0 60px rgba(0,255,203,.64);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all .3s ease-in-out 0s;
+}   
+ before {
+content: '';
+  border-radius: 1000px;
+  min-width: calc(300px + 12px);
+  min-height: calc(60px + 12px);
+  border: 6px solid #00FFCB;
+  box-shadow: 0 0 60px rgba(0,255,203,.64);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all .3s ease-in-out 0s;
+}
+
+hover,:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+hover before,:focus before {
+  opacity: 1;
+}
+
+ after {
+  content: '';
+  width: 30px; height: 30px;
+  border-radius: 100%;
+  border: 6px solid #00FFCB;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ring 1.5s infinite;
+}
+hover after,:focus after {
+  animation: none;
+  display: none;
+}
+
+@keyframes ring {
+  0% {
+    width: 30px;
+    height: 30px;
+    opacity: 1;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
+         }
+                }
+              </style>
+            {{ form_end(Depots_form) }}
+        </div>
+    {% endblock %}
+<br></br>
+<br></br>
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+
+        <div class="footer-top  ">
+            <div class="container ">
+   <div class="footer-contact text-center  ">
+
+    <a href="index.html" class="logo"><img src="{{asset('assets/img/logo1.png')}}"  alt="texte alternatif" width=5% height=5% class="img-fluid"></a>
+       <h3>ECOPARTAGE</h3>
+   </div>
+   <div class="row">
+
+       <div class="col-lg-2 col-md-6 footer-links">
+
+    <ul>
+        <li><i class="bx bx-chevron-right"></i> <a href="#">acceuil</a></li>
+    </ul>
+       </div>
+
+       <div class="col-lg-2 col-md-6 footer-links">
+
+    <ul>
+        <li><i class="bx bx-chevron-right"></i> <a href="#">Publication</a></li>
+    </ul>
+       </div>
+       <div class="col-lg-2 col-md-6 footer-links">
+
+    <ul>
+        <li><i class="bx bx-chevron-right"></i> <a href="#">dépôts</a></li>
+    </ul>
+       </div>
+       <div class="col-lg-2 col-md-6 footer-links">
+
+    <ul>
+        <li><i class="bx bx-chevron-right"></i> <a href="#">Produits</a></li>
+    </ul>
+       </div>
+       <div class="col-lg-2 col-md-6 footer-links">
+
+    <ul>
+        <li><i class="bx bx-chevron-right"></i> <a href="#">Formations</a></li>
+    </ul>
+       </div>
+       <div class="col-lg-2 col-md-6 footer-links">
+
+    <ul>
+        <li><i class="bx bx-chevron-right"></i> <a href="#">événements</a></li>
+    </ul>
+       </div>
+
+
+       <div class="text-center footer-newsletter">
+
+    <div class="social-links text-center text-md-right pt-3 pt-md-0">
+        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+    </div>
+       </div>
+
+
+   </div>
+            </div>
+        </div>
+
+    </footer><!-- End Footer -->
+{% endblock %}

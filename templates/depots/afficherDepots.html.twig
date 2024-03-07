@@ -1,0 +1,51 @@
+{% extends 'indexAdmin.html.twig' %}
+{% block title %}Depots{% endblock %}
+
+{%  block body %}
+{% block header %}
+{{ parent() }}
+{% endblock %}
+{% block sidebar %}
+{{ parent() }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+
+{% block body2 %}
+    <h1>Depots</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ Depots.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ Depots.Nom }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ Depots.Adresse }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ Depots.Etat }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ Depots.Image }}</td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+<a href="{{ path('app_list_Depots') }}" class="btn btn-primary">List Depots</a>
+
+<a href="{{ path('app_modifier_Depots', {'id': Depots.id}) }}" class="btn btn-primary">Modifier</a>
+
+    {% endblock %}
+    {% endblock %}
+    {% endblock %}

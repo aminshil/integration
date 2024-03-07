@@ -1,0 +1,43 @@
+{% extends 'indexAdmin.html.twig' %}
+{% block title %}Categorie{% endblock %}
+
+{%  block body %}
+{% block header %}
+{{ parent() }}
+{% endblock %}
+{% block sidebar %}
+{{ parent() }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+
+{% block body2 %}
+    <h1>Categorie</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ Categorie.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ Categorie.Nom }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ Categorie.Description }}</td>
+            </tr>
+           
+        </tbody>
+    </table>
+
+<a href="{{ path('app_list_Categorie') }}" class="btn btn-primary">List Categories</a>
+
+<a href="{{ path('app_modifier_Categorie', {'id': Categorie.id}) }}" class="btn btn-primary">Modifier</a>
+
+    {% endblock %}
+    {% endblock %}
+    {% endblock %}

@@ -1,0 +1,146 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Liste des Depots Admin {% endblock %}
+
+{% block body %}
+
+{% block header %}
+  <!-- Header content goes here -->
+{% endblock %}
+
+{% block sidebar %}
+  <!-- Sidebar content goes here -->
+{% endblock %}
+
+{% block content %}
+  <!-- Header -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <!-- ... (your existing header content) ... -->
+  </header><!-- End Header -->
+
+  <div class="container">
+    <aside id="sidebar" class="sidebar">
+      <!-- ... (your existing sidebar content) ... -->
+    </aside><!-- End Sidebar-->
+
+    <main class="col-md-9 ms-sm-auto col-lg-9 px-md-4">
+      <section class="section dashboard">
+        <div class="row">
+          <div class="card mb-3">
+            <div class="card-body">
+              <!-- Your notification items go here -->
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+             <li class="notification-item">
+    <i class="bi bi-check-circle text-success"></i>
+    <div>
+        <h4 class="custom-title-style">Notre Liste Depots</h4>
+        <p></p>
+    </div>
+</li>
+               </br><br></br></br><br></br>
+              <!-- Blob button styles -->
+              <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+
+              <h1 class="card-title">Liste des Depots Disponible : </h1>
+            <br></br><br>
+              <style>
+                h1 {
+                  color: #c00;
+                  font-family: sans-serif;
+                  font-size: 2em;
+                  margin-bottom: 0;
+                }
+
+                table {
+                  font-family: sans-serif;
+                  th,
+                  td {
+                    padding: 0.25em 0.5em;
+                    text-align: left;
+                    &:nth-child(2) {
+                      text-align: right;
+                    }
+                  }
+                  td {
+                    background-color: #eee;
+                  }
+                  th {
+                    background-color: #009;
+                    color: #fff;
+                  }
+                }
+                .notification-item {
+                list-style: none;
+                }
+                h4 {
+                
+                text-align: center;
+                font-weight: bold;
+                font-size: 24px; /* Ajustez la taille du texte selon vos besoins */
+                color: #ff0000; /* Remplacez cette valeur par la couleur souhaitée */
+                border: 2px solid #000000; /* Ajoutez une bordure de 2px, remplacez la couleur par celle souhaitée */
+                padding: 10px; /* Ajoutez un espace à l'intérieur de la bordure si nécessaire */
+                /* Ajoutez d'autres styles si nécessaire */
+                   }
+                    
+                .zigzag {
+                  border-collapse: separate;
+                  border-spacing: 0.25em 1em;
+                  tbody tr:nth-child(odd) {
+                    transform: rotate(2deg);
+                  }
+                  thead tr,
+                  tbody tr:nth-child(even) {
+                    transform: rotate(-2deg);
+                  }
+                }
+              </style>
+
+              <div class="table-responsive">
+                <table class="zigzag">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nom</th>
+                      <th>Adresse</th>
+                      <th>Etat</th>
+                      <th>Nom_Categorie</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for depots in listDepots %}
+                      <tr>
+                        <td>{{ depots.id }}</td>
+                        <td>{{ depots.Nom }}</td>
+                        <td>{{ depots.Adresse }}</td>
+                        <td>{{ depots.Etat }}</td>
+                        <td>{{ depots.categorie ? depots.categorie.getNom }}</td>
+                        <td>
+                            <a href="{{ path('app_modifier_Depots', {'id': depots.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                            <a href="{{ path('app_supprimer_Depots', {'id': depots.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+                            <a href="{{ path('generate.pdf', {'id': depots.id}) }}" class="btn btn-warning btn-sm">pdf</a>
+                        </td>
+                      </tr>
+                    {% else %}
+                      <tr>
+                        <td colspan="5">Il n'y a pas de dépôts disponibles</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+{% endblock %}
+{{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+
+{% endblock %}
